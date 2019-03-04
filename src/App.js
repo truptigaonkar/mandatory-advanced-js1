@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 
-
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking whether you can connect to server or not
 socket.on('connect', function () {
@@ -40,7 +39,7 @@ class App extends Component {
   // Signin with authenticated user
   signIn(username) {
     // calling setState will re-render the entire app efficiently.
-    this.setState({ user: {username} })
+    this.setState({ user: { username } })
   }
 
   // Authentication signout which clear out user from state
@@ -48,6 +47,7 @@ class App extends Component {
     this.setState({ user: null })
   }
 
+  // Fetch the data from An External API
   componentDidMount() {
     this.socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 
@@ -63,16 +63,16 @@ class App extends Component {
     });
   }
 
-    // Creating list
-    list(item) {
-      console.log(item);
-      return (
-        <li key= {item.id}>
-          <p>{item.username}</p>
-          <p>{item.content}</p>
-        </li>
-      )
-    }
+  // Creating list
+  createList(objItem) {
+    console.log(objItem);
+    return (
+      <li key={objItem.id}>
+        <p>{objItem.username}</p>
+        <p>{objItem.content}</p>
+      </li>
+    )
+  }
 
 
   // Rendering page after successfully login 
@@ -87,7 +87,7 @@ class App extends Component {
             <LoginForm onSignIn={this.signIn.bind(this)} />
         }
         <ul>
-          {this.state.messages.map(item => this.list(item))}
+          {this.state.messages.map(objItem => this.createList(objItem))}
         </ul>
       </div>
     );

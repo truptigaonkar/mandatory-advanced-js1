@@ -3,14 +3,14 @@ import './App.css';
 import io from 'socket.io-client';
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
-// Checking whether you can connect to server or not
+// Checking if connected to socket or not
 socket.on('connect', function () {
   console.log("connected to socket");
 });
 
-// Component Authentication 
+// Component Authentication
 class LoginForm extends React.Component {
-  handleonSubmit(e) {
+  handleSignIn(e) {
     e.preventDefault()
     let username = this.refs.username.value
     this.props.onSignIn(username)
@@ -18,9 +18,9 @@ class LoginForm extends React.Component {
   // Rendering login page
   render() {
     return (
-      <form onSubmit={this.handleonSubmit.bind(this)}>
+      <form onSubmit={this.handleSignIn.bind(this)}>
         <h3>Sign in</h3>
-        <input type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter USERNAME" />
+        <input type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter username" />
         <input type="submit" value="Login" />
       </form>
     )
@@ -30,21 +30,23 @@ class LoginForm extends React.Component {
 class App extends Component {
   constructor(props) {
     super(props)
+    // the initial application state
     this.state = {
+      signedin: false,
       user: null,
       messages: []
     }
   }
 
-  // Signin with authenticated user
+  // Authentication signin
   signIn(username) {
-    // calling setState will re-render the entire app efficiently.
-    this.setState({ user: { username } })
+    // calling setState will re-render the entire app (efficiently!)
+    this.setState({ signedin: true, user: { username } })
   }
 
   // Authentication signout which clear out user from state
   signOut() {
-    this.setState({ user: null })
+    this.setState({ signedin: false, user: null })
   }
 
   // Fetch the data from An External API
@@ -53,7 +55,6 @@ class App extends Component {
 
     // Writing messages
     socket.on("messages", (messages) => {
-      console.log(messages);
       this.setState({ messages }); // This is same as 'this.setState({ messages: messages });'
     });
 
@@ -67,39 +68,51 @@ class App extends Component {
   createList(objItem) {
     console.log(objItem);
     return (
-      <li key={objItem.id}>
+      <li key= {objItem.id}>
         <p>{objItem.username}</p>
         <p>{objItem.content}</p>
       </li>
     )
   }
 
-
-  // Rendering page after successfully login 
+  // Rendering page after successfully login
   render() {
-    return (
-      <div className="App">
-        <h1>Chat App</h1>
-        {
-          (this.state.user) ?
-            <Welcome user={this.state.user} onSignOut={this.signOut.bind(this)} />
-            :
-            <LoginForm onSignIn={this.signIn.bind(this)} />
-        }
-        <ul>
-          {this.state.messages.map(objItem => this.createList(objItem))}
-        </ul>
-      </div>
-    );
+    // if statement true, you will see the list of messages
+    if (!this.state.signedin) {
+      return (
+        <div className="App">
+          <div className="loginApp">
+            {
+              (this.state.user) ?
+                <Welcome user={this.state.user} onSignOut={this.signOut.bind(this)} />
+                :
+                <LoginForm onSignIn={this.signIn.bind(this)} />
+            }
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
+          <div className="messageList">
+            Welcome <strong>{this.state.user.username}</strong>! <br />
+            {/* <a href="javascript:;" onClick={onSignOut}>Sign out</a> */}
+            <button className="log-out" onClick={this.signOut.bind(this)}>Log Out</button>
+            <ul>
+              {this.state.messages.map(objItem => this.createList(objItem))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
-// Component to add Username and signout button to page
-const Welcome = ({ user, onSignOut }) => {
+// Component to add Username to page
+const Welcome = ({ user }) => {
   return (
     <div>
       Welcome <strong>{user.username}</strong>! <br />
-      <a href="javascript:;" onClick={onSignOut}>Sign out</a>
     </div>
   )
 }

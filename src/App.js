@@ -1,5 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import io from 'socket.io-client';
+
+//----------- Checking connection to server, Listening and writing messages from and to console -------------//
+const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
+// Checking whether you can connect to server or not
+socket.on('connect', function () {
+  console.log("connected to socket");
+});
+// Listening messages from console
+socket.on('new_message', function(message){
+  console.log(message);
+});
+// Writing messages to console
+socket.emit("message",{"username":"User11","content":"hej!"}, function(message){
+   console.log(message);
+})
+//----------- End of Checking connection to server, Listening and writing messages from and to console -------------//
 
 // Component Authentication 
 class LoginForm extends React.Component {

@@ -2,21 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 
-//----------- Checking connection to server, Listening and writing messages from and to console -------------//
+
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking whether you can connect to server or not
 socket.on('connect', function () {
   console.log("connected to socket");
 });
-// Listening messages from console
-socket.on('new_message', function(message){
-  console.log(message);
-});
-// Writing messages to console
-socket.emit("message",{"username":"User11","content":"hej!"}, function(message){
-   console.log(message);
-})
-//----------- End of Checking connection to server, Listening and writing messages from and to console -------------//
 
 // Component Authentication 
 class LoginForm extends React.Component {
@@ -41,7 +32,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      messages: []
     }
   }
 
@@ -56,6 +48,33 @@ class App extends Component {
     this.setState({ user: null })
   }
 
+  componentDidMount() {
+    this.socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
+
+    // Writing messages
+    socket.on("messages", (messages) => {
+      console.log(messages);
+      this.setState({ messages }); // This is same as 'this.setState({ messages: messages });'
+    });
+
+    // Listening messages
+    socket.on("new_message", (message) => {
+      this.setState({ messages: [...this.state.messages, message] });
+    });
+  }
+
+    // Creating list
+    list(item) {
+      console.log(item);
+      return (
+        <li key= {item.id}>
+          <p>{item.username}</p>
+          <p>{item.content}</p>
+        </li>
+      )
+    }
+
+
   // Rendering page after successfully login 
   render() {
     return (
@@ -67,6 +86,9 @@ class App extends Component {
             :
             <LoginForm onSignIn={this.signIn.bind(this)} />
         }
+        <ul>
+          {this.state.messages.map(item => this.list(item))}
+        </ul>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import { Button, Form, Input, Card, CardTitle, CardText, CardHeader } from 'reactstrap';
+import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav,UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, ListGroup, ListGroupItem } from 'reactstrap';
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking if connected to socket or not
@@ -23,19 +23,16 @@ class LoginForm extends React.Component {
         <Form onSubmit={this.handleSignIn.bind(this)}>
           <CardHeader tag="h1">CHAT Application</CardHeader>
           <Card body inverse color="info">
-            <CardTitle tag="h4">SIGN-IN</CardTitle>
-            <CardText><input style={{width: 350, height: 40, borderRadius:5}} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter username" /> </CardText>
+            <CardTitle tag="h5">SIGN-IN</CardTitle>
+            <CardText>
+            <InputGroup>
+            <InputGroupAddon addonType="prepend">@</InputGroupAddon><input style={{width: 350, height: 50, borderRadius:5}} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="-----------------  Enter Username  -----------------" /> 
+              </InputGroup>
+              </CardText>
             <Button type="submit" value="Login" color="danger">LOGIN</Button>{' '}
           </Card>
         </Form>
       </div> 
-
-      /* <form onSubmit={this.handleSignIn.bind(this)}>
-        <h3>Sign in</h3>
-        <input type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter username" />
-        <input type="submit" value="Login" />
-      </form> */
-
     )
   }
 }
@@ -111,6 +108,9 @@ class App extends Component {
     if (!this.state.signedin) {
       return (
         <div className="App">
+
+       
+
           <div className="loginApp">
             {
               (this.state.user) ?
@@ -124,10 +124,25 @@ class App extends Component {
     } else {
       return (
         <div className="App">
+
           <div className="messageList">
-            Welcome <strong>{this.state.user.username}</strong>! <br />
-            {/* <a href="javascript:;" onClick={onSignOut}>Sign out</a> */}
-            <button className="log-out" onClick={this.signOut.bind(this)}>Log Out</button>
+          <Navbar color="dark" style={{color: 'white'}} light expand="md">
+          <NavbarBrand><Spinner type="grow" color="warning" style={{ width: '2rem', height: '2rem' }}/>CHAT</NavbarBrand>
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret style={{color: 'white'}}>
+                <span style={{color: 'white', fontSize:10}}>Welcome! You're logged in as</span> <strong style={{color: 'orange', fontSize:20}}>{this.state.user.username} <Spinner size="sm" color="primary" />{' '}</strong>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                  <Button color="danger" style={{width: 100, height: 40, borderRadius:5}} onClick={this.signOut.bind(this)}>SIGNOUT</Button>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
             <ul>
               {this.state.messages.map(objItem => this.createList(objItem))}
             </ul>

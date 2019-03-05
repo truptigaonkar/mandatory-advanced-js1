@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
+import { Button, Form, Input, Card, CardTitle, CardText, CardHeader } from 'reactstrap';
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking if connected to socket or not
@@ -17,12 +18,24 @@ class LoginForm extends React.Component {
   }
   // Rendering login page
   render() {
-    return (
-      <form onSubmit={this.handleSignIn.bind(this)}>
+        return (
+      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+        <Form onSubmit={this.handleSignIn.bind(this)}>
+          <CardHeader tag="h1">CHAT Application</CardHeader>
+          <Card body inverse color="info">
+            <CardTitle tag="h4">SIGN-IN</CardTitle>
+            <CardText><input style={{width: 350, height: 40, borderRadius:5}} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter username" /> </CardText>
+            <Button type="submit" value="Login" color="danger">LOGIN</Button>{' '}
+          </Card>
+        </Form>
+      </div> 
+
+      /* <form onSubmit={this.handleSignIn.bind(this)}>
         <h3>Sign in</h3>
         <input type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="Enter username" />
         <input type="submit" value="Login" />
-      </form>
+      </form> */
+
     )
   }
 }
@@ -75,6 +88,23 @@ class App extends Component {
     )
   }
 
+  // Input button function
+  handleInput(e){
+    this.setState({
+      message: e.target.value
+    });
+  }
+
+  // Submit button function
+  handleButton(){
+    socket.emit("message", {
+      username: this.state.user.username,
+      content: this.state.message,
+    }, (status) => {
+        this.setState({ messages: [...this.state.messages, status.data.newMessage]});
+    });
+  }
+
   // Rendering page after successfully login
   render() {
     // if statement true, you will see the list of messages
@@ -101,6 +131,8 @@ class App extends Component {
             <ul>
               {this.state.messages.map(objItem => this.createList(objItem))}
             </ul>
+            <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)}/>
+            <button onClick={this.handleButton.bind(this)}>Submit</button>
           </div>
         </div>
       );

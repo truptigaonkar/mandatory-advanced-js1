@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav,UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, Input, CardFooter } from 'reactstrap';
+import user1 from './user1.png';
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking if connected to socket or not
@@ -18,21 +19,21 @@ class LoginForm extends React.Component {
   }
   // Rendering login page
   render() {
-        return (
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+    return (
+      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', textAlign:'center' }}>
         <Form onSubmit={this.handleSignIn.bind(this)}>
-          <CardHeader tag="h1">CHAT Application</CardHeader>
+          <CardHeader tag="h1" style={{ backgroundColor: '#7FDBFF' }}>Real-Time Chat</CardHeader>
           <Card body inverse color="info">
             <CardTitle tag="h5">SIGN-IN</CardTitle>
             <CardText>
-            <InputGroup>
-            <InputGroupAddon addonType="prepend">@</InputGroupAddon><input style={{width: 350, height: 50, borderRadius:5}} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="-----------------  Enter Username  -----------------" /> 
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">@</InputGroupAddon><input style={{ width: 350, height: 50, borderRadius: 5 }} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="-----------------  Enter Username  -----------------" />
               </InputGroup>
-              </CardText>
+            </CardText>
             <Button type="submit" value="Login" color="danger">LOGIN</Button>{' '}
           </Card>
         </Form>
-      </div> 
+      </div>
     )
   }
 }
@@ -44,7 +45,9 @@ class App extends Component {
     this.state = {
       signedin: false,
       user: null,
-      messages: []
+      messages: [],
+      message: "",
+      path:'./user1.png'
     }
   }
 
@@ -77,29 +80,37 @@ class App extends Component {
   // Creating list
   createList(objItem) {
     console.log(objItem);
+
+    /* --------- https://emojipedia.org/  --------------- */
+    const content1 = objItem.content.replace(":heart:", "💖");
+    // const content2 = objItem.content.replace(":heart_eyes_cat:", "😻");
+    // const content3 = objItem.content.replace(":two_hearts:", "💕");
     return (
-      <li key= {objItem.id}>
-        <p>{objItem.username}</p>
-        <p>{objItem.content}</p>
-      </li>
+      <div>
+      <Card body inverse color="info">
+        <strong style={{color:'red'}}>{objItem.username}</strong>
+        {content1} 
+      </Card><br/>
+      </div>
     )
   }
 
   // Input button function
-  handleInput(e){
+  handleInput(e) {
     this.setState({
       message: e.target.value
     });
   }
 
   // Submit button function
-  handleButton(){
+  handleButton() {
     socket.emit("message", {
       username: this.state.user.username,
       content: this.state.message,
     }, (status) => {
-        this.setState({ messages: [...this.state.messages, status.data.newMessage]});
+      this.setState({ messages: [...this.state.messages, status.data.newMessage] });
     });
+    this.setState({ message: ""});
   }
 
   // Rendering page after successfully login
@@ -108,9 +119,6 @@ class App extends Component {
     if (!this.state.signedin) {
       return (
         <div className="App">
-
-       
-
           <div className="loginApp">
             {
               (this.state.user) ?
@@ -124,30 +132,35 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-
           <div className="messageList">
-          <Navbar color="dark" style={{color: 'white'}} light expand="md">
-          <NavbarBrand><Spinner type="grow" color="warning" style={{ width: '2rem', height: '2rem' }}/>CHAT</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret style={{color: 'white'}}>
-                <span style={{color: 'white', fontSize:10}}>Welcome! You're logged in as</span> <strong style={{color: 'orange', fontSize:20}}>{this.state.user.username} <Spinner size="sm" color="primary" />{' '}</strong>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                  <Button color="danger" style={{width: 100, height: 40, borderRadius:5}} onClick={this.signOut.bind(this)}>SIGNOUT</Button>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-            <ul>
+            <Navbar color="dark" style={{ color: 'white' }} light expand="md">
+              <NavbarBrand style={{color:'#39ff14'}}><Spinner type="grow" color="warning" style={{ width: '2rem', height: '2rem' }} />Real-Time Chat</NavbarBrand>
+              <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className="ml-auto" navbar>
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret style={{ color: 'white' }}>
+                      <span style={{ color: 'white', fontSize: 10 }}>Welcome! You're logged in as</span> <img src={user1} alt="User image" width="25px" /><strong style={{ color: 'orange', fontSize: 20 }}>{this.state.user.username} <Spinner size="sm" color="primary" />{' '}</strong>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <Button color="danger" style={{ width: 100, height: 40, borderRadius: 5 }} onClick={this.signOut.bind(this)}>SIGNOUT</Button>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </Nav>
+              </Collapse>
+            </Navbar>
+            <br/>
+            <div style={{position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}}>
+            <Card style={{width: 800}}>
+              <CardHeader tag="h5" style={{textAlign:'center'}}>Chat window</CardHeader>
               {this.state.messages.map(objItem => this.createList(objItem))}
-            </ul>
-            <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)}/>
-            <button onClick={this.handleButton.bind(this)}>Submit</button>
+              <CardFooter>
+              <input style={{ width: 650, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Enter Message" />
+              <Button color="danger" style={{ width: 100, height: 50, borderRadius: 5 }} onClick={this.handleButton.bind(this)}>SEND</Button>
+              </CardFooter>
+            </Card>
+            </div>
           </div>
         </div>
       );

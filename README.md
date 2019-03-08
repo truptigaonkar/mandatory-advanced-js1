@@ -1,5 +1,4 @@
-# Mandatory Exercise 1 - Advanced
-JavaScript with React
+# Mandatory Exercise 1 - Advanced JavaScript with React
 **The deadline for this exercise is Friday, March 15, 08:59.**
 
 

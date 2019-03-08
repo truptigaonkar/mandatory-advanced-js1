@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, CardFooter } from 'reactstrap';
+import LoginForm from './components/loginform'; //Component LoginForm from src/components/loginform.js
+import { Button, Card, CardHeader, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, CardFooter } from 'reactstrap';
 import user1 from './user1.png';
-import Linkify from "react-linkify";
+import Linkify from "react-linkify"; 
 import Emojify from "react-emojione";
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
@@ -11,34 +12,6 @@ const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000
 socket.on('connect', function () {
   console.log("connected to socket");
 });
-
-// Component Authentication
-class LoginForm extends React.Component {
-  handleSignIn(e) {
-    e.preventDefault()
-    let username = this.refs.username.value
-    this.props.onSignIn(username)
-  }
-  // Rendering login page
-  render() {
-    return (
-      <div className="login__form">
-        <Form onSubmit={this.handleSignIn.bind(this)}>
-          <CardHeader tag="h1" style={{ backgroundColor: '#7FDBFF' }}>Real-Time Chat</CardHeader>
-          <Card body inverse color="info">
-            <CardTitle tag="h5">SIGN-IN</CardTitle>
-            <CardText>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">@</InputGroupAddon><input style={{ width: 350, height: 50, borderRadius: 5 }} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="-----------------  Enter Username  -----------------" />
-              </InputGroup>
-            </CardText>
-            <Button type="submit" value="Login" color="danger"><i className="fa fa-sign-in" style={{ fontSize: '36px' }}></i></Button>{' '}
-          </Card>
-        </Form>
-      </div>
-    )
-  }
-}
 
 class App extends Component {
   constructor(props) {
@@ -83,12 +56,12 @@ class App extends Component {
   createList(objItem) {
     console.log(objItem);
     return (
-      <p>
-        <div style={{ marginLeft: '10px' }}><img alt="user pic" width='20px' height='20px' src={require("./user2.png")} /> <strong style={{ color: 'red', fontSize: '20px' }}>{objItem.username} </strong></div>
-        <Card body inverse color="primary" style={{ height: '70px', width: '350px', borderRadius: '20px', marginLeft: '60px' }}>
+      <p key= {objItem.id}>
+        <div style={{ marginLeft: '10px' }}><img alt="user pic" width='20px' height='20px' src={require("./user2.png")} /> <strong style={{ color: 'red' }}>{objItem.username} </strong></div>
+        <Card body inverse style={{ height: '70px', width: '350px', borderRadius: '20px', marginLeft: '60px', backgroundColor:'#3FE0D0' }}>
           <div>
-            <Linkify style={{ color: "white" }}>
-              <Emojify style={{ height: 20, width: 20 }}>{objItem.content}</Emojify>
+            <Linkify className="message__content">
+              <Emojify color="danger" style={{ height: 20, width: 20, }}>{objItem.content}</Emojify>
             </Linkify>
           </div>
         </Card>
@@ -111,7 +84,7 @@ class App extends Component {
     }, (status) => {
       this.setState({ messages: [...this.state.messages, status.data.newMessage] });
     });
-    this.setState({ message: "" });
+    this.setState({message: "halkat"});
   }
 
   // Rendering page after successfully login
@@ -157,11 +130,11 @@ class App extends Component {
           {/* Chat window */}
           <div className="messageList" style={{ position: 'absolute', left: '30%', top: '10%', bottom: '50%' }} >
             <Card className="chatWindow" style={{ width: 500, position: 'absolute' }}>
-              <CardHeader tag="h5" style={{ backgroundColor: '#87CEFA' }}><i className="fa fa-comments"></i> Welcome to Live Chat!</CardHeader>
+              <CardHeader color="primary" tag="h5" style={{ backgroundColor: '#87CEFA' }}><i className="fa fa-comments"></i> Welcome to Live Chat!</CardHeader>
               {this.state.messages.map(objItem => this.createList(objItem))}
               <CardFooter>
                 <Navbar style={{ color: 'white', position: 'fixed', bottom: '3%', left: '30%', width: 500, backgroundColor: '#87CEFA' }} expand="md">
-                  <input style={{ width: 500, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Type message here ......" />
+                  <textarea  minLength={1} maxLength={200} style={{ width: 500, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Type message here ......" />
                   <Button color="danger" style={{ width: 100, height: 50, borderRadius: 5 }} onClick={this.handleButton.bind(this)}><i className="fa fa-send"></i></Button>
                 </Navbar>
               </CardFooter>

@@ -23,6 +23,9 @@
   position: fixed; 
   top: 0;
 }
+.message__content {
+  word-break: break-all;
+}
 
 
 

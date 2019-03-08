@@ -39,18 +39,21 @@ The server sends the following events
 * messages - This event is sent automatically when a client connects and will give a list of all messages on the server
 * new_message - This event is sent to all clients (except the sender) when a new message is sent to the server
 * A message sent from the server has the following structure
+```
 {
     username: “A username”,
     content: “A message”,
     timestamp: 1551191228686, // A timestamp in milliseconds
     id: “message-120”, // A unique ID
 }
+```
 * To send a new message to the server an event called “message” is sent from the client. The message should have the following form: 
+```
 {
     username: “A username”,
     content: “A message”,
 }
-
+```
 ### The client
 Your task is to implement a client for this server. The client should be implemented using React and contain two views:
 
@@ -79,18 +82,35 @@ If a message contains a URL it should be automatically converted to a link.
 ### Requirements
 If a message contains a URL it should be automatically converted to a link.
 
-* It should contain a “login” screen with a text input and a button. This screen is shown when the app is opened.
-* When a username is submitted the user is shown a “chat” screen with a text input for sending messages and a list of messages
-* The message list should be populated with the messages received from the server and new messages should be added automatically (including messages sent from the client)
-* The chat screen should contain a “close” button so the user can return to the “login” screen
-* Support for emojis
-* Automatically convert URLs into links
+* It should contain a “login” screen with a text input and a button. This screen is shown when the app is opened. 
+- [x] DONE
+   
+* When a username is submitted the user is shown a “chat” screen with a text input for sending messages and a list of messages.
+- [x]  DONE
 
-### Requirements
+* The message list should be populated with the messages received from the server and new messages should be added automatically (including messages sent from the client) 
+- [x]  DONE
+
+* The chat screen should contain a “close” button so the user can return to the “login” screen. 
+- [x]  DONE
+
+* Support for emojis. 
+- [x]  DONE - Emojify
+
+* Automatically convert URLs into links 
+- [x] DONE - Linkify
+
+### My Contribution:
+ 
+- [x] styling
+    - [x]  reactstrap
+    - [x]  Google Font
+    - [x]  Font Awesome
+
+
+### Tips
 * Try to connect to the server and play around to see how it works with a simple Node program before attempting to integrate it with your React application
 * Use regular expressions (regex) to find URLs in the messages
 * Ask questions if there is something you are unsure about
-
-
 
 

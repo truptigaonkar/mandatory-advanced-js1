@@ -1,68 +1,116 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Mandatory Exercise 1 - Advanced JavaScript with React
+**The deadline for this exercise is Friday, March 15, 08:59.**
 
-## Available Scripts
 
-In the project directory, you can run:
+## Preparation
 
-### `npm start`
+1. Create a new repository on [Github](github.com) called **mandatory-advanced-js1**
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Follow the instructions that Github gives you; create a local repository and add a remote or clone
+the recently created repository.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Submission
 
-### `npm test`
+When you do the submission of your exercise in Ping Pong, **before the deadline**,
+you will enter the link to your repository, such as:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+https://github.com/mygithubusername/mandatory-advanced-js1
+```
 
-### `npm run build`
+The teacher will look in the **master branch**. If any commits are done to the master branch after the deadline, the grade IG will follow.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You will either get **G** or **IG** on the mandatory exercises.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Instructions
+In this exercise you will create a simple chat application using React. The backend server is provided.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Socket.io
+Socket.io is a library that enables real-time communication between a client and a server. The client and server communicates by sending and receiving events.
+Please refer to the documentation for more information. https://socket.io/docs/
 
-### `npm run eject`
+### Socket.io server
+A socket.io server is provided at
+http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000
+This URL could change. Ask the teacher if you are unable to access it.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Events
+The server sends the following events
+* messages - This event is sent automatically when a client connects and will give a list of all messages on the server
+* new_message - This event is sent to all clients (except the sender) when a new message is sent to the server
+* A message sent from the server has the following structure
+```
+{
+    username: “A username”,
+    content: “A message”,
+    timestamp: 1551191228686, // A timestamp in milliseconds
+    id: “message-120”, // A unique ID
+}
+```
+* To send a new message to the server an event called “message” is sent from the client. The message should have the following form: 
+```
+{
+    username: “A username”,
+    content: “A message”,
+}
+```
+### The client
+Your task is to implement a client for this server. The client should be implemented using React and contain two views:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* A “login” screen where the user inputs a username
+* A “chat” screen that shows all the messages and contains a text input field where the user can add new messages
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+When sending a new message to the server it will not be returned to the sender (it’s only
+sent to all other connected clients) but it must still be shown in the client.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Validation
+The server has some limitations on the username and content
 
-## Learn More
+* The username can only contain alphanumeric characters, “-”, “_” and spaces and must be between 1 and 12 characters long
+* The content must be between 1 and 200 characters long
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This validation should be added to the client.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Emojis
+The client should handle emojis, similar to how it works in Slack.
 
-### Code Splitting
+E.g. if the message contains the string “:heart:” it should be replaced with a heart emoji. You are required to support at least three different emojis.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Links
+If a message contains a URL it should be automatically converted to a link.
 
-### Analyzing the Bundle Size
+### Requirements
+If a message contains a URL it should be automatically converted to a link.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+* It should contain a “login” screen with a text input and a button. This screen is shown when the app is opened. 
+- [x] DONE
+   
+* When a username is submitted the user is shown a “chat” screen with a text input for sending messages and a list of messages.
+- [x]  DONE
 
-### Making a Progressive Web App
+* The message list should be populated with the messages received from the server and new messages should be added automatically (including messages sent from the client) 
+- [x]  DONE
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+* The chat screen should contain a “close” button so the user can return to the “login” screen. 
+- [x]  DONE
 
-### Advanced Configuration
+* Support for emojis. 
+- [x]  DONE - Emojify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+* Automatically convert URLs into links 
+- [x] DONE - Linkify
 
-### Deployment
+### My Contribution:
+ 
+- [x] styling
+    - [x]  reactstrap
+    - [x]  Google Font
+    - [x]  Font Awesome
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
+### Tips
+* Try to connect to the server and play around to see how it works with a simple Node program before attempting to integrate it with your React application
+* Use regular expressions (regex) to find URLs in the messages
+* Ask questions if there is something you are unsure about
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+

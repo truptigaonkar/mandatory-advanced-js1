@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, Input, CardFooter } from 'reactstrap';
+import { Button, Form, Card, CardTitle, CardText, CardHeader, InputGroup, InputGroupAddon, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, CardFooter } from 'reactstrap';
 import user1 from './user1.png';
+import Linkify from "react-linkify";
+import Emojify from "react-emojione";
 
 const socket = io('http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000');
 // Checking if connected to socket or not
@@ -20,7 +22,7 @@ class LoginForm extends React.Component {
   // Rendering login page
   render() {
     return (
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', textAlign:'center' }}>
+      <div className="login__form">
         <Form onSubmit={this.handleSignIn.bind(this)}>
           <CardHeader tag="h1" style={{ backgroundColor: '#7FDBFF' }}>Real-Time Chat</CardHeader>
           <Card body inverse color="info">
@@ -30,7 +32,7 @@ class LoginForm extends React.Component {
                 <InputGroupAddon addonType="prepend">@</InputGroupAddon><input style={{ width: 350, height: 50, borderRadius: 5 }} type="text" ref="username" required="required" minLength={1} maxLength={12} placeholder="-----------------  Enter Username  -----------------" />
               </InputGroup>
             </CardText>
-            <Button type="submit" value="Login" color="danger">LOGIN</Button>{' '}
+            <Button type="submit" value="Login" color="danger"><i className="fa fa-sign-in" style={{ fontSize: '36px' }}></i></Button>{' '}
           </Card>
         </Form>
       </div>
@@ -47,7 +49,7 @@ class App extends Component {
       user: null,
       messages: [],
       message: "",
-      path:'./user1.png'
+      path: './user1.png'
     }
   }
 
@@ -80,18 +82,17 @@ class App extends Component {
   // Creating list
   createList(objItem) {
     console.log(objItem);
-
-    /* --------- https://emojipedia.org/  --------------- */
-    const content1 = objItem.content.replace(":heart:", "💖");
-    // const content2 = objItem.content.replace(":heart_eyes_cat:", "😻");
-    // const content3 = objItem.content.replace(":two_hearts:", "💕");
     return (
-      <div>
-      <Card body inverse color="info">
-        <strong style={{color:'red'}}>{objItem.username}</strong>
-        {content1} 
-      </Card><br/>
-      </div>
+      <p>
+        <div style={{ marginLeft: '10px' }}><img alt="user pic" width='20px' height='20px' src={require("./user2.png")} /> <strong style={{ color: 'red', fontSize: '20px' }}>{objItem.username} </strong></div>
+        <Card body inverse color="primary" style={{ height: '70px', width: '350px', borderRadius: '20px', marginLeft: '60px' }}>
+          <div>
+            <Linkify style={{ color: "white" }}>
+              <Emojify style={{ height: 20, width: 20 }}>{objItem.content}</Emojify>
+            </Linkify>
+          </div>
+        </Card>
+      </p>
     )
   }
 
@@ -110,7 +111,7 @@ class App extends Component {
     }, (status) => {
       this.setState({ messages: [...this.state.messages, status.data.newMessage] });
     });
-    this.setState({ message: ""});
+    this.setState({ message: "" });
   }
 
   // Rendering page after successfully login
@@ -132,9 +133,10 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <div className="messageList">
-            <Navbar color="dark" style={{ color: 'white' }} light expand="md">
-              <NavbarBrand style={{color:'#39ff14'}}><Spinner type="grow" color="warning" style={{ width: '2rem', height: '2rem' }} />Real-Time Chat</NavbarBrand>
+          {/* After login window */}
+          <div className="loginPage" >
+            <Navbar color="dark" className="navbar__header" light expand="md">
+              <NavbarBrand className="navbar__brand" style={{ color: '#39ff14' }}><Spinner type="grow" color="warning" style={{ width: '2rem', height: '2rem' }} />Real-Time Chat</NavbarBrand>
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <UncontrolledDropdown nav inNavbar>
@@ -143,24 +145,27 @@ class App extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
-                        <Button color="danger" style={{ width: 100, height: 40, borderRadius: 5 }} onClick={this.signOut.bind(this)}>SIGNOUT</Button>
+                        <Button color="danger" style={{ width: 100, height: 40, borderRadius: 5 }} onClick={this.signOut.bind(this)}><i className="fa fa-sign-out">Signout</i></Button>
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>
               </Collapse>
             </Navbar>
-            <br/>
-            <div style={{position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}}>
-            <Card style={{width: 800}}>
-              <CardHeader tag="h5" style={{textAlign:'center'}}>Chat window</CardHeader>
+            <br />
+          </div>
+          {/* Chat window */}
+          <div className="messageList" style={{ position: 'absolute', left: '30%', top: '10%', bottom: '50%' }} >
+            <Card className="chatWindow" style={{ width: 500, position: 'absolute' }}>
+              <CardHeader tag="h5" style={{ backgroundColor: '#87CEFA' }}><i className="fa fa-comments"></i> Welcome to Live Chat!</CardHeader>
               {this.state.messages.map(objItem => this.createList(objItem))}
               <CardFooter>
-              <input style={{ width: 650, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Enter Message" />
-              <Button color="danger" style={{ width: 100, height: 50, borderRadius: 5 }} onClick={this.handleButton.bind(this)}>SEND</Button>
+                <Navbar style={{ color: 'white', position: 'fixed', bottom: '3%', left: '30%', width: 500, backgroundColor: '#87CEFA' }} expand="md">
+                  <input style={{ width: 500, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Type message here ......" />
+                  <Button color="danger" style={{ width: 100, height: 50, borderRadius: 5 }} onClick={this.handleButton.bind(this)}><i className="fa fa-send"></i></Button>
+                </Navbar>
               </CardFooter>
             </Card>
-            </div>
           </div>
         </div>
       );

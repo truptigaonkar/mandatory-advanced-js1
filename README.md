@@ -1,10 +1,8 @@
-# Simple Chat Application - Advanced JavaScript with React
-### Demo: [RealTimeChat](http://truptigaonkar.github.io/mandatory-advanced-js1/)
-## Instructions
+## Simple Chat Application - Advanced JavaScript with React  - [Live Demo]( http://truptigaonkar.github.io/mandatory-advanced-js1/)
+### Instructions
 * Create a simple chat application using React and backend server - Socket.io server is provided http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000.
 * Socket.io is a library that enables real-time communication between a client and a server. The client and server communicates by sending and receiving events. Please refer to the documentation for more information. https://socket.io/docs/
-
-### Events
+#### Events
 The server sends the following events
 * messages - This event is sent automatically when a client connects and will give a list of all messages on the server
 * new_message - This event is sent to all clients (except the sender) when a new message is sent to the server
@@ -24,26 +22,22 @@ The server sends the following events
     content: “A message”,
 }
 ```
-### The client
+#### The client
 * Your task is to implement a client for this server. The client should be implemented using React and contain two views:
     * A “login” screen where the user inputs a username
     * A “chat” screen that shows all the messages and contains a text input field where the user can add new messages
 * When sending a new message to the server it will not be returned to the sender (it’s only sent to all other connected clients) but it must still be shown in the client.
-
-### Validation
+#### Validation
 * The server has some limitations on the username and content
     * The username can only contain alphanumeric characters, “-”, “_” and spaces and must be between 1 and 12 characters long
     * The content must be between 1 and 200 characters long
 * This validation should be added to the client.
-
-### Emojis
+#### Emojis
 The client should handle emojis, similar to how it works in Slack.
     * E.g. if the message contains the string “:heart:” it should be replaced with a heart emoji. You are required to support at least three different emojis.
-
-### Links
+#### Links
 If a message contains a URL it should be automatically converted to a link.
-
-### Requirements
+#### Requirements
 * If a message contains a URL it should be automatically converted to a link.
 * It should contain a “login” screen with a text input and a button. This screen is shown when the app is opened. 
 * When a username is submitted the user is shown a “chat” screen with a text input for sending messages and a list of messages.
@@ -51,14 +45,11 @@ If a message contains a URL it should be automatically converted to a link.
 * The chat screen should contain a “close” button so the user can return to the “login” screen. 
 * Support for emojis. 
 * Automatically convert URLs into links 
-
-### My Contribution:
+#### My Contribution:
 - [x] styling
     - [x]  reactstrap
     - [x]  Google Font
     - [x]  Font Awesome
-
-
 ### Tips
 * Try to connect to the server and play around to see how it works with a simple Node program before attempting to integrate it with your React application
 * Use regular expressions (regex) to find URLs in the messages

@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.af7ae505.woff2"
   },
   {
-    "revision": "eda98d66cc4316e79334",
+    "revision": "0adb2f68a4c576bc7e55",
     "url": "/mandatory-advanced-js1/static/css/main.966e35cf.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/user2.f3b2f63b.png"
   },
   {
-    "revision": "eda98d66cc4316e79334",
-    "url": "/mandatory-advanced-js1/static/js/main.eda98d66.chunk.js"
+    "revision": "0adb2f68a4c576bc7e55",
+    "url": "/mandatory-advanced-js1/static/js/main.0adb2f68.chunk.js"
   },
   {
     "revision": "fee66e712a8a08eef5805a46892932ad",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/css/2.0e5b1795.chunk.css"
   },
   {
-    "revision": "d3b0751a0e818ae4e148b6e36fa3012a",
+    "revision": "d570fed21aae75e74647844f06112fbe",
     "url": "/mandatory-advanced-js1/index.html"
   }
 ];

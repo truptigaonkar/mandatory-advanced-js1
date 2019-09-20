@@ -2,6 +2,26 @@
 ### Instructions
 * Create a simple chat application using React and backend server - Socket.io server is provided http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000.
 * Socket.io is a library that enables real-time communication between a client and a server. The client and server communicates by sending and receiving events. Please refer to the documentation for more information. https://socket.io/docs/
+
+#### Technologies
+- Node
+- React
+- Backend: Socket.io library (https://socket.io/docs/ )
+- reactstrap (https://reactstrap.github.io/)
+
+#### Installation
+**REACT**
+```
+  $ git clone git@github.com:truptigaonkar/mandatory-advanced-js1.git
+  $ cd mandatory-advanced-js1.git
+  $ npm install
+  $ npm start
+```
+**Express**
+```
+  $ node server/server.js
+  $ npm start
+```
 #### Events
 The server sends the following events
 * messages - This event is sent automatically when a client connects and will give a list of all messages on the server
@@ -50,9 +70,5 @@ If a message contains a URL it should be automatically converted to a link.
     - [x]  reactstrap
     - [x]  Google Font
     - [x]  Font Awesome
-### Tips
-* Try to connect to the server and play around to see how it works with a simple Node program before attempting to integrate it with your React application
-* Use regular expressions (regex) to find URLs in the messages
-* Ask questions if there is something you are unsure about
 
 

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 import LoginForm from './components/loginform'; //Component LoginForm from src/components/loginform.js
-import { Button, Card, CardHeader, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, CardFooter } from 'reactstrap';
+import { Button, Card, CardHeader, CardBody, Collapse, Navbar, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Spinner, CardFooter } from 'reactstrap';
 import user1 from './user1.png';
-import Linkify from "react-linkify"; 
+import Linkify from "react-linkify";
 import Emojify from "react-emojione";
 
 const socket = io('http://mandatory-advanced-js1.devspace.host/');
@@ -56,9 +56,9 @@ class App extends Component {
   createList(objItem) {
     console.log(objItem);
     return (
-      <p key= {objItem.id}>
+      <p key={objItem.id}>
         <div style={{ marginLeft: '10px' }}><img alt="user pic" width='20px' height='20px' src={require("./user2.png")} /> <strong style={{ color: 'red' }}>{objItem.username} </strong></div>
-        <Card body inverse style={{ height: '70px', width: '350px', borderRadius: '20px', marginLeft: '60px', backgroundColor:'#3FE0D0' }}>
+        <Card body inverse style={{ height: '70px', width: '350px', borderRadius: '20px', marginLeft: '60px', backgroundColor: '#3FE0D0' }}>
           <div>
             <Linkify className="message__content">
               <Emojify color="danger" style={{ height: 20, width: 20, }}>{objItem.content}</Emojify>
@@ -84,7 +84,7 @@ class App extends Component {
     }, (status) => {
       this.setState({ messages: [...this.state.messages, status.data.newMessage] });
     });
-    this.setState({message: "halkat"});
+    this.setState({ message: "halkat" });
   }
 
   // Rendering page after successfully login
@@ -105,7 +105,7 @@ class App extends Component {
       );
     } else {
       return (
-        <div className="App">
+        <>
           {/* After login window */}
           <div className="loginPage" >
             <Navbar color="dark" className="navbar__header" light expand="md">
@@ -129,18 +129,23 @@ class App extends Component {
           </div>
           {/* Chat window */}
           <div className="messageList" style={{ position: 'absolute', left: '30%', top: '10%', bottom: '50%' }} >
-            <Card className="chatWindow" style={{ width: 500, position: 'absolute' }}>
-              <CardHeader color="primary" tag="h5" style={{ backgroundColor: '#87CEFA' }}><i className="fa fa-comments"></i> Welcome to Live Chat!</CardHeader>
-              {this.state.messages.map(objItem => this.createList(objItem))}
-              <CardFooter>
-                <Navbar style={{ color: 'white', position: 'fixed', bottom: '3%', left: '30%', width: 500, backgroundColor: '#87CEFA' }} expand="md">
-                  <textarea  minLength={1} maxLength={200} style={{ width: 500, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Type message here ......" />
+            <Card style={{ width: '600px' }}>
+            <CardHeader color="primary" tag="h5" style={{ backgroundColor: '#87CEFA', position: "fixed-top"  }}><i className="fa fa-comments"></i> Welcome to Live Chat!</CardHeader>
+              <div class="scrollbar" id="style-default">
+                <div class="force-overflow">
+                  <CardBody>
+                  {this.state.messages.map(objItem => this.createList(objItem))}
+                  </CardBody>
+                </div>
+              </div>
+              <CardFooter style={{ position: "fixed-bottom", display:'flex' }}>
+                  <textarea minLength={1} maxLength={200} style={{ width: 500, height: 50, borderRadius: 5 }} type="text" value={this.state.value} onChange={this.handleInput.bind(this)} required="required" placeholder="Type message here ......" />
                   <Button color="danger" style={{ width: 100, height: 50, borderRadius: 5 }} onClick={this.handleButton.bind(this)}><i className="fa fa-send"></i></Button>
-                </Navbar>
               </CardFooter>
             </Card>
-          </div>
-        </div>
+          </div> 
+        </>
+
       );
     }
   }

@@ -1,14 +1,6 @@
 *{
   font-family: 'Audiowide', cursive;
 }
-.App {
-  /* text-align: center; */
-}
-
-.chatWindow{
-  height: calc(90% + 280px);
-  overflow-y: scroll;
-}
 
 .login__form{
   position: absolute; 
@@ -17,6 +9,7 @@
   transform: translate(-50%, -50%);  
   text-align:center;
 }
+
 .navbar__header{
   color: white; 
   width:100%; 
@@ -27,6 +20,16 @@
   word-break: break-all;
 }
 
+.scrollbar{
+	height: 450px;
+	overflow-y: scroll;
+  margin-bottom: 25px;
+  width: 600px;
+}
+
+.force-overflow{
+	min-height: 600px;
+}
 
 
 

@@ -32,19 +32,19 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "674f50d287a8c48dc19ba404d20fe713",
-    "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.674f50d2.eot"
-  },
-  {
     "revision": "b06871f281fee6b241d60582ae9369b9",
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.b06871f2.ttf"
+  },
+  {
+    "revision": "674f50d287a8c48dc19ba404d20fe713",
+    "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
     "revision": "a208e9fd356d8a18ab23",
     "url": "/mandatory-advanced-js1/static/css/2.0e5b1795.chunk.css"
   },
   {
-    "revision": "93b29ee0f0f44eda86eb0da95e28c29b",
+    "revision": "d570fed21aae75e74647844f06112fbe",
     "url": "/mandatory-advanced-js1/index.html"
   }
 ];

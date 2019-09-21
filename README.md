@@ -1,6 +1,6 @@
 ## Simple Chat Application - Advanced JavaScript with React  - [Live Demo]( http://truptigaonkar.github.io/mandatory-advanced-js1/)
 ### Instructions
-* Create a simple chat application using React and backend server - Socket.io server is provided http://ec2-13-53-66-202.eu-north-1.compute.amazonaws.com:3000.
+* Create a simple chat application using React and backend server - Socket.io server is provided http://mandatory-advanced-js1.devspace.host/.
 * Socket.io is a library that enables real-time communication between a client and a server. The client and server communicates by sending and receiving events. Please refer to the documentation for more information. https://socket.io/docs/
 
 #### Technologies

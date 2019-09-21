@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.af7ae505.woff2"
   },
   {
-    "revision": "0adb2f68a4c576bc7e55",
-    "url": "/mandatory-advanced-js1/static/css/main.966e35cf.chunk.css"
+    "revision": "942a5ef65ff8025b5d95",
+    "url": "/mandatory-advanced-js1/static/css/main.b6ce8f04.chunk.css"
   },
   {
     "revision": "020e0a3dd4d5a900da01",
@@ -16,16 +16,16 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
-    "revision": "a208e9fd356d8a18ab23",
-    "url": "/mandatory-advanced-js1/static/js/2.a208e9fd.chunk.js"
+    "revision": "bb047b152d9dc33b2f35",
+    "url": "/mandatory-advanced-js1/static/js/2.bb047b15.chunk.js"
   },
   {
     "revision": "f3b2f63b63718d81bb75bb9190e0f6e7",
     "url": "/mandatory-advanced-js1/static/media/user2.f3b2f63b.png"
   },
   {
-    "revision": "0adb2f68a4c576bc7e55",
-    "url": "/mandatory-advanced-js1/static/js/main.0adb2f68.chunk.js"
+    "revision": "942a5ef65ff8025b5d95",
+    "url": "/mandatory-advanced-js1/static/js/main.942a5ef6.chunk.js"
   },
   {
     "revision": "fee66e712a8a08eef5805a46892932ad",
@@ -40,11 +40,11 @@ self.__precacheManifest = [
     "url": "/mandatory-advanced-js1/static/media/fontawesome-webfont.b06871f2.ttf"
   },
   {
-    "revision": "a208e9fd356d8a18ab23",
+    "revision": "bb047b152d9dc33b2f35",
     "url": "/mandatory-advanced-js1/static/css/2.0e5b1795.chunk.css"
   },
   {
-    "revision": "d570fed21aae75e74647844f06112fbe",
+    "revision": "42a5413b54efa51fdcd3ff27e01042c2",
     "url": "/mandatory-advanced-js1/index.html"
   }
 ];

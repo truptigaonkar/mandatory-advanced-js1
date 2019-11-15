@@ -1,15 +1,17 @@
-version: v1beta3
+version: v1beta4
 images:
   default:
     image: dscr.io/${DEVSPACE_USERNAME}/mandatoryadvancedjs1
 deployments:
 - name: mandatory-advanced-js1
-  component:
-    containers:
-    - image: dscr.io/${DEVSPACE_USERNAME}/mandatoryadvancedjs1
-    service:
-      ports:
-      - port: 8000
+  helm:
+    componentChart: true
+    values:
+      containers:
+      - image: dscr.io/${DEVSPACE_USERNAME}/mandatoryadvancedjs1
+      service:
+        ports:
+        - port: 8000
 dev:
   ports:
   - imageName: default
@@ -21,3 +23,4 @@ dev:
   - imageName: default
     excludePaths:
     - devspace.yaml/
+    - devspace.yaml

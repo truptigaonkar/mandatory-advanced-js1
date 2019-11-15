@@ -7,10 +7,12 @@ import user1 from './user1.png';
 import Linkify from "react-linkify";
 import Emojify from "react-emojione";
 
-const socket = io('http://mandatory-advanced-js1.devspace.host/');
+const API_URL = `${process.env.REACT_APP_API_URL}`;
+
+const socket = io(API_URL);
 // Checking if connected to socket or not
 socket.on('connect', function () {
-  console.log("connected to socket");
+  //console.log("connected to socket");
 });
 
 class App extends Component {
@@ -39,7 +41,7 @@ class App extends Component {
 
   // Fetch the data from An External API
   componentDidMount() {
-    this.socket = io('http://mandatory-advanced-js1.devspace.host/');
+    this.socket = io(API_URL);
 
     // Writing messages
     socket.on("messages", (messages) => {
@@ -54,7 +56,7 @@ class App extends Component {
 
   // Creating list
   createList(objItem) {
-    console.log(objItem);
+    //console.log(objItem);
     return (
       <p key={objItem.id}>
         <div style={{ marginLeft: '10px' }}><img alt="user pic" width='20px' height='20px' src={require("./user2.png")} /> <strong style={{ color: 'red' }}>{objItem.username} </strong></div>

@@ -7,9 +7,8 @@ import user1 from './user1.png';
 import Linkify from "react-linkify";
 import Emojify from "react-emojione";
 
-const API_URL = `${process.env.REACT_APP_API_URL}`;
-
-const socket = io(API_URL);
+//const socket = io('http://localhost:8000');
+const socket = io('https://cors-anywhere.herokuapp.com/http://gifted-antonym-257013.appspot.com/');
 // Checking if connected to socket or not
 socket.on('connect', function () {
   //console.log("connected to socket");
@@ -41,7 +40,8 @@ class App extends Component {
 
   // Fetch the data from An External API
   componentDidMount() {
-    this.socket = io(API_URL);
+    //this.socket = io('http://localhost:8000');
+    this.socket = io('https://cors-anywhere.herokuapp.com/http://gifted-antonym-257013.appspot.com/');
 
     // Writing messages
     socket.on("messages", (messages) => {

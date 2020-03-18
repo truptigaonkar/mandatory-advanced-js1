@@ -1,4 +1,10 @@
 ## Simple Chat Application - Advanced JavaScript with React  - [Live Demo]( http://truptigaonkar.github.io/mandatory-advanced-js1/)
+
+<p align="center"> 
+<img width="200" height="250" alt="1  signin" src="https://user-images.githubusercontent.com/14937374/76994451-aed85480-694e-11ea-829f-298867da1d19.png">
+<img width="500" height="300" alt="2  chat" src="https://user-images.githubusercontent.com/14937374/76994446-abdd6400-694e-11ea-8133-ccb20b2ef52d.png">
+</p>
+
 ### Instructions
 * Create a simple chat application using React and backend server - Socket.io server is provided http://mandatory-advanced-js1.devspace.host/.
 * Socket.io is a library that enables real-time communication between a client and a server. The client and server communicates by sending and receiving events. Please refer to the documentation for more information. https://socket.io/docs/
